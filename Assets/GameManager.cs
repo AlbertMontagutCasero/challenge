@@ -16,12 +16,13 @@ public class GameManager : MonoBehaviour
                 for (int z = 0; z < (i + 1) * (j+1); z++) //resultat taula multiplicar ex: 4x4 = 16 figures
                 {
                     float widthToInstantiate = toInstantiate.GetComponent<Renderer>().bounds.size.x;
+                    float offset = widthToInstantiate;
                     Vector3 nextPosition = new Vector3(
-                        (float)j * widthToInstantiate + widthToInstantiate / 2,
+                        (float)j * (offset + widthToInstantiate + widthToInstantiate / 2) ,
                         (float)z * widthToInstantiate + widthToInstantiate / 2,
-                        (float)i * widthToInstantiate + widthToInstantiate / 2);
+                        (float)i * (offset + widthToInstantiate + widthToInstantiate / 2));
                     GameObject instantiate = Instantiate(toInstantiate, nextPosition, new Quaternion(0, 0, 0, 0));
-
+                    
                 }
             }
         }
