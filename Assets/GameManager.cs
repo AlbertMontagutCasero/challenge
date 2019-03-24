@@ -17,41 +17,41 @@ public class GameManager : MonoBehaviour
                 int multiplicationResult = (table + 1) * (multiplyBy + 1);
                 float widthToInstantiate = toInstantiate.GetComponent<Renderer>().bounds.size.x;
                 float offset = widthToInstantiate;
+                Vector3 startPosition = new Vector3(widthToInstantiate * 3, 0, 0);
 
-                if (multiplyBy == 0) // first 
+                for (int i = 0; i < multiplicationResult; i++) //resultat taula multiplicar ex: 4x4 = 16 figures
                 {
-                    for (int z = 0; z < multiplicationResult; z++)
-                    {
-                    Vector3 nextPosition = new Vector3(
-                        (float)multiplyBy * (widthToInstantiate + widthToInstantiate / 2),
-                        (float)z * widthToInstantiate + widthToInstantiate / 2,
-                        (float)table * (widthToInstantiate + widthToInstantiate / 2));
+                    Vector3 nextPosition;
+                    GameObject instantiated;
+                    Renderer instantiadedRender;
 
-                        GameObject instantiated = Instantiate(toInstantiate, nextPosition, new Quaternion(0, 0, 0, 0));
-                        Renderer instantiadedRender = instantiated.GetComponent<Renderer>();
+                    if (multiplyBy == 0) // first iteration spawn red indicator cubes
+                    {
+                        nextPosition = new Vector3(
+                            widthToInstantiate / 2,
+                            i * widthToInstantiate + widthToInstantiate / 2,
+                            table * (offset + widthToInstantiate) + widthToInstantiate / 2);
+                        instantiated = Instantiate(toInstantiate, nextPosition, new Quaternion(0, 0, 0, 0));
+                        instantiadedRender = instantiated.GetComponent<Renderer>();
                         instantiadedRender.material.color = new Color32(
-                            (byte)((z + 1) * 255 / multiplicationResult),
+                            (byte)((i + 1) * 255 / multiplicationResult),
                             0,
                             0,
                             255);
                     }
-                }
 
-                for (int i = 0; i < multiplicationResult; i++) //resultat taula multiplicar ex: 4x4 = 16 figures
-                {
-
-                    Vector3 nextPosition = new Vector3(
-                        (float)multiplyBy * (offset + widthToInstantiate + widthToInstantiate / 2) ,
-                        (float)i * widthToInstantiate + widthToInstantiate / 2,
-                        (float)table * (offset + widthToInstantiate + widthToInstantiate / 2));
-
-                    GameObject instantiated = Instantiate(toInstantiate, nextPosition, new Quaternion(0, 0, 0, 0));
-                    Renderer instantiadedRender = instantiated.GetComponent<Renderer>();
+                    nextPosition = new Vector3(
+                        startPosition.x + (multiplyBy * (offset + widthToInstantiate) + widthToInstantiate / 2),
+                        startPosition.y + (i * widthToInstantiate + widthToInstantiate / 2),
+                        startPosition.z + (table * (offset + widthToInstantiate) + widthToInstantiate / 2));
+                    instantiated = Instantiate(toInstantiate, nextPosition, new Quaternion(0, 0, 0, 0));
+                    instantiadedRender = instantiated.GetComponent<Renderer>();
                     instantiadedRender.material.color = new Color32(
                         0,
                         (byte)(multiplyBy * 255 / maxMultiplyBy),
                         (byte)((i + 1) * 255 / multiplicationResult),
                         255);
+                    
                 }
             }
         }
